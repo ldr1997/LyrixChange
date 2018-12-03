@@ -11,7 +11,9 @@
 
 <h1>Demos</h1>
 
-<%= link_to 'New Demo', new_demo_path %>
+<% if current_user %>
+	<%= link_to 'New Demo', new_demo_path %>
+<% end %>
 
 <% @demos.each do |demo| %>
 	<div class="card" style="width: 18rem;">
