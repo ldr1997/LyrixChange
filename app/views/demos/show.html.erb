@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @demo.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @demo.description %>
+</p>
+
+<h2><%= @demo.comments.count %> Comments</h2>
+<%= render @demo.comments %>
+<h3>Reply to this Thread</h3>
+<%= render "comments/form" %>
+
+<%= link_to 'Edit', edit_demo_path(@demo) %> |
+<%= link_to 'Back', demos_path %>

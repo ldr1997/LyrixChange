@@ -1,5 +1,6 @@
 <% if current_user %>
   Logged in as <%= current_user.username %>.
+  <%= link_to "My Profile", current_user %> | 
   <%= link_to "Log Out", logout_path %>
 <% else %>
   <%= link_to "Sign Up", signup_path %> or 
@@ -8,14 +9,20 @@
 <p id="notice"><%= notice %></p>
 
 
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<h1>Demos</h1>
 
-<button type="button" class="btn btn-primary">Primary</button>
-<button type="button" class="btn btn-secondary">Secondary</button>
-<button type="button" class="btn btn-success">Success</button>
-<button type="button" class="btn btn-danger">Danger</button>
-<button type="button" class="btn btn-warning">Warning</button>
-<button type="button" class="btn btn-info">Info</button>
-<button type="button" class="btn btn-light">Light</button>
-<button type="button" class="btn btn-dark">Dark</button>
+<%= link_to 'New Demo', new_demo_path %>
+
+<% @demos.each do |demo| %>
+	<div class="card" style="width: 18rem;">
+		<div class="card-body">
+			<h5 class="card-title"><%= demo.title %></h5>
+			<h6 class="card-subtitle mb-2 text-muted"><%= demo.user.full_name %></h6>
+			<p class="card-text"><%= demo.description %></p>
+		</div>
+		<% if demo.user == current_user %>
+			<%= link_to 'Edit', edit_demo_path(demo) %>
+			<%= link_to 'Destroy', demo, method: :delete, data: { confirm: 'Are you sure?' } %>
+		<% end %>
+	</div>
+<% end %>

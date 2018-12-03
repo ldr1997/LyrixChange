@@ -6,11 +6,6 @@
 </p>
 
 <p>
-  <strong>Password:</strong>
-  <%= @user.password %>
-</p>
-
-<p>
   <strong>Full name:</strong>
   <%= @user.full_name %>
 </p>
@@ -24,6 +19,12 @@
   <strong>Genres:</strong>
   <%= @user.genres %>
 </p>
+
+<h5>Demos</h5>
+<% @user.demos.each do |demo| %>
+  <h6><%= demo.title %></h6>
+  <p><%= demo.description %></p>
+<% end %>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %> | 
