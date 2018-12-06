@@ -1,19 +1,24 @@
-<p id="notice"><%= notice %></p>
+<div class="card mx-auto" style="width: 50rem;">
+	<div class="card-body">
+		<h3 class="card-title"><%= @demo.title %></h3>
+		<p class="text-muted">Posted by <%= link_to @demo.user.full_name, @demo.user %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @demo.title %>
-</p>
+		<% if @demo.user == current_user %>
+			<%= link_to 'Edit', edit_demo_path(@demo) %> | 
+			<%= link_to 'Destroy', @demo, method: :delete, data: { confirm: 'Are you sure?' } %>
+		<% end %>
 
-<p>
-  <strong>Description:</strong>
-  <%= @demo.description %>
-</p>
+		<p><%= @demo.description %></p>
 
-<h2><%= @demo.comments.count %> Comments</h2>
-<%= render @demo.comments %>
-<h3>Reply to this Thread</h3>
-<%= render "comments/form" %>
+		<h5 class="text-center"><%= @demo.comments.count %> Comments</h5>
 
-<%= link_to 'Edit', edit_demo_path(@demo) %> |
-<%= link_to 'Back', demos_path %>
+		<div class="card mx-auto" style="width: 35rem;">
+			<div class="card-body">
+				<%= render @demo.comments %>	
+			
+				<h3>Reply to this Thread</h3>
+				<%= render "comments/form" %>
+			</div>
+		</h5>
+	</div>
+</div>

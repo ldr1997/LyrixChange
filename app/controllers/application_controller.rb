@@ -8,4 +8,10 @@ class ApplicationController < ActionController::Base
             @current_user = nil
         end
     end
+
+    def user_logged_in
+    	if !session[:user_id]
+      		redirect_to login_path, notice: "ERROR: Must be logged in to see this."
+    	end
+    end
 end

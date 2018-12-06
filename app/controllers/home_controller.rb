@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
-  def index
-    @demos = Demo.all
-  end
+	before_action :user_logged_in
+	def index
+		@demos = Demo.all
+	end
 end

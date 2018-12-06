@@ -1,2 +1,7 @@
 <p><%= comment.comment_text %></p>
-<h6><%= comment.user.full_name %></h6>
+<p class="text-muted"><%= comment.user.full_name %></p>
+<% if current_user.id == comment.user.id %>
+	<%= link_to "Edit", edit_demo_comment_path(comment.demo, comment)%> | 
+ 	<%= link_to "Delete", [comment.demo, comment], method: :delete, data: { confirm: "Are you sure?" } %>
+<% end %>
+<hr/>

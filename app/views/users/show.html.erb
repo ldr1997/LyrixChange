@@ -1,31 +1,43 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <br>
+  <div class="card">
+    <div class="card-body">
+      <h1><%= @user.full_name %></h1>
+      <h8 class="text-muted"><%= @user.username %></h8>
+      <p><%= @user.description %></p>
+      <p>
+        <strong>Genres:</strong>
+        <%= @user.genres %>
+      </p>
+      <% if @user.id == current_user.id %>
+        <%= link_to 'Edit Profile', edit_user_path(@user) %>
+      <% end %>
+      <br><br>
 
-<p>
-  <strong>Username:</strong>
-  <%= @user.username %>
-</p>
+      <h5>Bands</h5>
+      <table class="table">
+        <% @user.bands.each do |band| %>
+          <tr>
+            <td><%= band.name %></td>
+            <td><%= link_to 'View Band', band %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+  <br>
 
-<p>
-  <strong>Full name:</strong>
-  <%= @user.full_name %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @user.description %>
-</p>
-
-<p>
-  <strong>Genres:</strong>
-  <%= @user.genres %>
-</p>
-
-<h5>Demos</h5>
-<% @user.demos.each do |demo| %>
-  <h6><%= demo.title %></h6>
-  <p><%= demo.description %></p>
-<% end %>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %> | 
-<%= link_to 'Home', root_url %>
+  <h3>Demos by <%= @user.full_name %></h3>
+  <% @user.demos.each do |demo| %>
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title"><%= demo.title %></h6>
+        <p class="card-text"><%= demo.description %></p>
+        <h8 class="text-muted"><%= demo.comments.count %> Comments</h8>
+        <br>
+        <%= link_to 'View Full Post', demo %>
+      </div>
+    </div>
+  <% end %>
+  <br>
+</div>

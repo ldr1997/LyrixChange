@@ -1,30 +1,19 @@
-<% if current_user %>
-  Logged in as <%= current_user.username %>.
-  <%= link_to "My Profile", current_user %> | 
-  <%= link_to "Log Out", logout_path %>
-<% else %>
-  <%= link_to "Sign Up", signup_path %> or 
-  <%= link_to "Log In", login_path %>
-<% end %>
-<p id="notice"><%= notice %></p>
+<div class="card-body">
+	<h1>Demos</h1>
 
-
-<h1>Demos</h1>
-
-<% if current_user %>
-	<%= link_to 'New Demo', new_demo_path %>
-<% end %>
-
-<% @demos.each do |demo| %>
-	<div class="card" style="width: 18rem;">
-		<div class="card-body">
-			<h5 class="card-title"><%= demo.title %></h5>
-			<h6 class="card-subtitle mb-2 text-muted"><%= demo.user.full_name %></h6>
-			<p class="card-text"><%= demo.description %></p>
+	<% if current_user %>
+		<a href="/demos/new" class="btn mx-auto">Post a Demo</a>
+	<% end %>
+	<% @demos.each do |demo| %>
+		<div class="card" style="width: 50rem;">
+			<div class="card-body">
+				<h4 class="card-title"><%= demo.title %></h4>
+				<h6 class="card-subtitle mb-2 text-muted"><%= demo.user.full_name %></h6>
+				<p class="card-text"><%= demo.description %></p>
+				<h8 class="text-muted"><%= demo.comments.count %> Comments</h8>
+				<br>
+				<%= link_to 'View Full Post', demo %>
+			</div>
 		</div>
-		<% if demo.user == current_user %>
-			<%= link_to 'Edit', edit_demo_path(demo) %>
-			<%= link_to 'Destroy', demo, method: :delete, data: { confirm: 'Are you sure?' } %>
-		<% end %>
-	</div>
-<% end %>
+	<% end %>
+</div>

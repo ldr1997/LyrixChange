@@ -3,7 +3,5 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
   has_many :demos
   has_many :comments
-  # has_many :bands
-  has_many :user_bands
-  # has_many :bands, through :user_bands
+  has_and_belongs_to_many :bands
 end

@@ -16,7 +16,7 @@ class BandsTest < ApplicationSystemTestCase
 
     fill_in "Description", with: @band.description
     fill_in "Genres", with: @band.genres
-    fill_in "User", with: @band.user_id
+    fill_in "Name", with: @band.name
     click_on "Create Band"
 
     assert_text "Band was successfully created"
@@ -29,7 +29,7 @@ class BandsTest < ApplicationSystemTestCase
 
     fill_in "Description", with: @band.description
     fill_in "Genres", with: @band.genres
-    fill_in "User", with: @band.user_id
+    fill_in "Name", with: @band.name
     click_on "Update Band"
 
     assert_text "Band was successfully updated"

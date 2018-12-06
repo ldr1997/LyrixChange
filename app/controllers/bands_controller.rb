@@ -1,9 +1,10 @@
 class BandsController < ApplicationController
-  before_action :set_band, only: [:show, :edit, :update, :destroy]
+  before_action :user_logged_in, :set_band, only: [:show, :edit, :update, :destroy]
 
   # GET /bands
   # GET /bands.json
   def index
+    user_logged_in
     @bands = Band.all
   end
 
@@ -24,7 +25,19 @@ class BandsController < ApplicationController
   # POST /bands
   # POST /bands.json
   def create
-    @band = Band.new(band_params)
+    @band = current_user.bands.new(band_params)
+    user_ids = params[:band][:user_ids]
+    params[:band].delete :user_ids
+
+    @band.users << current_user
+
+    for user_id in user_ids do
+      if user_id != ""
+        temp_user = User.find(user_id)
+        temp_user.bands << @band
+        # @band.users << temp_user
+      end
+    end
 
     respond_to do |format|
       if @band.save
@@ -35,11 +48,24 @@ class BandsController < ApplicationController
         format.json { render json: @band.errors, status: :unprocessable_entity }
       end
     end
+
   end
 
   # PATCH/PUT /bands/1
   # PATCH/PUT /bands/1.json
   def update
+    user_ids = params[:band][:user_ids]
+    params[:band].delete :user_ids
+
+    # Update all band-user associations
+    for user in User.all do
+      if (user_ids.include?(user.id.to_s)) then
+        user.bands.find_by(id: @band.id) || user.bands << @band
+      else
+        user.bands.delete(@band)
+      end
+    end
+
     respond_to do |format|
       if @band.update(band_params)
         format.html { redirect_to @band, notice: 'Band was successfully updated.' }
@@ -69,6 +95,6 @@ class BandsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def band_params
-      params.require(:band).permit(:description, :genres, :user_id)
+      params.require(:band).permit(:name, :description, :genres)
     end
 end

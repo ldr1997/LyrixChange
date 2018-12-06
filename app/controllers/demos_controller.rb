@@ -1,5 +1,5 @@
 class DemosController < ApplicationController
-  before_action :set_demo, only: [:show, :edit, :update, :destroy]
+  before_action :user_logged_in, :set_demo, only: [:show, :edit, :update, :destroy]
 
   # GET /demos
   # GET /demos.json
